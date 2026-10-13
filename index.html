@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RS Vocabulary W4~W7</title>
+<style>
+:root{
+  --bg:#eef6ff; --card:#ffffff; --ink:#17365d; --soft:#5f7fa6;
+  --b1:#dcecff; --b2:#a9cffb; --b3:#4a90e2; --b4:#2b6cc4; --b5:#17365d;
+  --line:#c9defa; --good:#2b6cc4; --bad:#17365d;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Avenir Next Rounded","Hiragino Maru Gothic ProN","Microsoft JhengHei","PingFang TC","Segoe UI",Arial,sans-serif;
+  font-size:17px;line-height:1.55;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:860px;margin:0 auto;padding:16px 14px 60px}
+header{text-align:center;padding:22px 10px 8px}
+header .cloud{font-size:44px;line-height:1}
+h1{margin:6px 0 2px;font-size:28px;letter-spacing:.3px}
+header p{margin:0;color:var(--soft)}
+.info{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0 4px}
+.info label{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--line);
+  border-radius:14px;padding:8px 12px;font-weight:700}
+.info input{border:none;border-bottom:2px dashed var(--b2);background:transparent;font:inherit;color:var(--ink);width:150px;padding:2px 4px;outline:none}
+.tabs{position:sticky;top:0;z-index:5;display:flex;gap:6px;background:var(--bg);padding:10px 0;overflow-x:auto}
+.tab{flex:1 0 auto;border:2px solid var(--line);background:var(--card);color:var(--soft);font:inherit;font-weight:800;
+  border-radius:999px;padding:8px 16px;cursor:pointer;white-space:nowrap}
+.tab.on{background:var(--b3);border-color:var(--b3);color:#fff}
+.tab small{font-weight:600;opacity:.85;margin-left:4px}
+.part{display:none}.part.on{display:block}
+.banner{background:var(--b1);border:2px solid var(--b2);border-radius:18px;padding:14px 16px;margin:6px 0 14px}
+.banner h2{margin:0 0 4px;font-size:21px}
+.banner p{margin:0;color:var(--soft);font-size:15px}
+.set-title{margin:22px 0 8px;font-size:18px;display:flex;align-items:center;gap:8px}
+.set-title span{background:var(--b3);color:#fff;border-radius:999px;padding:2px 12px;font-size:14px}
+.q{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 12px;margin:8px 0;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.q.right{border-color:var(--b3);background:#f2f8ff}
+.q.wrong{border-color:var(--b5);background:#fff}
+.num{min-width:34px;height:34px;border-radius:50%;background:var(--b1);color:var(--b4);display:grid;place-items:center;font-weight:800;flex:0 0 auto}
+.spk{border:none;background:var(--b3);color:#fff;border-radius:999px;height:40px;min-width:40px;padding:0 12px;font-size:18px;cursor:pointer;flex:0 0 auto}
+.spk.slow{background:var(--b2);color:var(--b5)}
+.spk:active{transform:scale(.94)}
+.spk:focus-visible,.tab:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--b4);outline-offset:2px}
+.ans{flex:1 1 140px;min-width:120px;border:2px solid var(--b2);border-radius:12px;padding:8px 12px;font:inherit;font-size:18px;color:var(--ink);background:#fff}
+.fb{flex:1 0 100%;font-size:15px;font-weight:700;padding-left:44px}
+.fb b{color:var(--b4)}
+.bank{display:flex;flex-wrap:wrap;gap:8px;background:#fff;border:2px dashed var(--b2);border-radius:16px;padding:10px;margin-bottom:8px}
+.chip{background:var(--b1);color:var(--b5);border-radius:999px;padding:4px 14px;font-weight:800}
+.q.def .txt{flex:1 1 260px}
+.sel{border:2px solid var(--b2);border-radius:12px;padding:8px;font:inherit;font-weight:700;color:var(--ink);background:#fff;flex:0 0 auto;min-width:150px}
+.q.cloze{display:block}
+.q.cloze .top{display:flex;gap:10px;align-items:flex-start}
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--b3);text-align:center;font-weight:800;color:var(--b4)}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0 2px 44px}
+.opt{border:2px solid var(--b2);border-radius:12px;padding:8px 12px;background:#fff;font-weight:700;cursor:pointer;display:flex;gap:8px;align-items:center}
+.opt input{accent-color:var(--b3);width:18px;height:18px}
+.opt:has(input:checked){background:var(--b1);border-color:var(--b3)}
+.opt.ok{background:var(--b3);border-color:var(--b3);color:#fff}
+.opt.no{background:#fff;border-color:var(--b5);text-decoration:line-through}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.btn{border:none;border-radius:999px;font:inherit;font-weight:800;padding:12px 24px;cursor:pointer;background:var(--b3);color:#fff}
+.btn.ghost{background:var(--card);color:var(--b4);border:2px solid var(--b2)}
+.btn.big{font-size:20px;padding:14px 34px}
+.score{text-align:center;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:24px 14px}
+.score .big{font-size:60px;font-weight:900;color:var(--b4);line-height:1.1}
+.rows{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.rows div{background:var(--b1);border-radius:14px;padding:10px}
+.rows strong{display:block;font-size:24px;color:var(--b4)}
+.hint{color:var(--soft);font-size:14px;text-align:center;margin-top:10px}
+@media(max-width:560px){
+  h1{font-size:23px}
+  .opts{grid-template-columns:1fr;margin-left:0}
+  .fb{padding-left:0}
+  .rows{grid-template-columns:1fr}
+}
+@media print{.tabs,.nav,.spk{display:none}.part{display:block!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.banner{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.banner .shuf{padding:8px 16px;flex:0 0 auto;white-space:nowrap}
+.tally{margin-top:6px;font-weight:800;color:var(--b4);font-size:15px}
+.spk.chk{background:var(--b4)}
+.spk:disabled{opacity:.45;cursor:default}
+.score .btn{margin:4px}
+@media(max-width:560px){.banner{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="cloud">☁️✏️</div>
+  <h1>RS Vocabulary W4~W7</h1>
+  <p>Captain Arsenio · Into Reading M1W3 · Words from W4–W7 (40 words)</p>
+  <div class="info">
+    <label>Name <input id="stuName" type="text" autocomplete="off"></label>
+    <label>Class <input id="stuClass" type="text" autocomplete="off" style="width:90px"></label>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab on" data-p="0">Part 1 <small>Listening</small></button>
+  <button class="tab" data-p="1">Part 2 <small>Matching</small></button>
+  <button class="tab" data-p="2">Part 3 <small>Sentences</small></button>
+  <button class="tab" data-p="3">Score</button>
+</nav>
+
+<section class="part on" id="part0"></section>
+<section class="part" id="part1"></section>
+<section class="part" id="part2"></section>
+<section class="part" id="part3"></section>
+
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+// s = sentence with ____ (suffix after blank is part of the sentence); d = distractors
+const WORDS = [
+// ---- W4 ----
+{wk:4,w:"impulse",pos:"n",def:"An impulse is the desire to do something.",s:"Our ____ was to take every puppy in the pound.",d:["acceleration","prototype","contribution"]},
+{wk:4,w:"passionate",pos:"adj",def:"To have a passionate feeling is to have strong emotions about it.",s:"The nurse is ____ about her work in the hospital.",d:["eccentric","distinguished","irrelevant"]},
+{wk:4,w:"eccentric",pos:"adj",def:"Someone who is eccentric is odd or strange.",s:"The ____ inventor was always working on crazy projects.",d:["automatic","irregular","irrelevant"]},
+{wk:4,w:"prototype",pos:"n",def:"A prototype is a model created to test something before creating it in its final form.",s:"We built a(n) ____ to show what the real robot would look like.",d:["acceleration","contribution","lotion"]},
+{wk:4,w:"acceleration",pos:"n",def:"Acceleration is the act of moving faster.",s:"The ____ of the car around the curve caused it to run off the road.",d:["prototype","biology","illness"]},
+{wk:4,w:"distinguished",pos:"adj",def:"A distinguished group is known and respected for its excellence.",s:"The ____ inventor won an award for excellence in airplane design.",d:["irregular","illegal","automatic"]},
+{wk:4,w:"evidently",pos:"adv",def:"If something happened evidently, it happened for an obvious reason.",s:"____, schools also have rules about having cell phones in class because students must study.",d:["knowingly","illegal","soprano"]},
+{wk:4,w:"conceived",pos:"v",def:"If you thought of the idea to create something, you conceived it.",s:"The clever student ____ an idea for a safer bicycle helmet.",d:["eloped","amplify","recline"]},
+{wk:4,w:"contribution",pos:"n",def:"A person who helps to make something has made a contribution to that job.",s:"The airplane was an important ____ to long-distance travel.",d:["acceleration","illness","soprano"]},
+{wk:4,w:"circumstances",pos:"n",def:"The way an event happened or the causes of it are its circumstances.",s:"Because of the ____ the picnic was cancelled.",d:["soprano","lotion","biology"]},
+// ---- W5 ----
+{wk:5,w:"automatic",pos:"adj",def:"Having controls that work without needing a person to operate them.",s:"Many shops have ____ doors.",d:["illegal","irresponsible","illogical"]},
+{wk:5,w:"automobile",pos:"n",def:"A car.",s:"The ____ industry provides many jobs in America.",d:["biography","illness","soprano"]},
+{wk:5,w:"biology",pos:"n",def:"The scientific study of the life and structure of plants and animals.",s:"We study the ____ of animals in Science class.",d:["automobile","lotion","soprano"]},
+{wk:5,w:"biography",pos:"n",def:"The story of a person’s life written by somebody else.",s:"I read a great ____ about Edison last week.",d:["automobile","biology","illness"]},
+{wk:5,w:"irregular",pos:"adj",def:"Not arranged in an even way, or not having an even, smooth pattern or shape.",s:"A combination of ____ meals and insufficient sleep was to blame for his death.",d:["automatic","illegal","irrelevant"]},
+{wk:5,w:"irresponsible",pos:"adj",def:"Not thinking enough about the effects of what they do; not showing a feeling of responsibility.",s:"The ____ driver drove too fast around the corner and hit a tree.",d:["automatic","irrelevant","irregular"]},
+{wk:5,w:"irrelevant",pos:"adj",def:"Not important to or connected with a situation.",s:"The student’s remarks were ____ to the subject the students were studying.",d:["illegal","automatic","irregular"]},
+{wk:5,w:"illness",pos:"n",def:"The state of being physically or mentally sick.",s:"I had a(n) ____ and needed to see the doctor.",d:["biology","automobile","lotion"]},
+{wk:5,w:"illegal",pos:"adj",def:"Not allowed by the law.",s:"It is ____ to drive a car until you are an adult.",d:["automatic","irregular","feisty"]},
+{wk:5,w:"illogical",pos:"adj",def:"Not sensible or thought out in a logical way.",s:"She has a(n) ____ fear of insects.",d:["automatic","illegal","distinguished"]},
+// ---- W6 ----
+{wk:6,w:"high",pos:"adj",def:"Measuring a long distance from the bottom to the top.",s:"The house has a ____ wall all the way round it.",d:["slow","foal","go"]},
+{wk:6,w:"sky",pos:"n",def:"The space above the earth that you can see when you look up.",s:"The ____ suddenly went dark and it started to rain.",d:["foal","pine","stroll"]},
+{wk:6,w:"pine",pos:"n",def:"An evergreen forest tree with leaves like needles.",s:"You can find many ____s in a tropical rainforest.",d:["high","slow","go"]},
+{wk:6,w:"fine",pos:"adj",def:"Very well!",s:"“How’s your throat?” “It’s ____ as long as I don’t cough.”",d:["foal","snow","throw"]},
+{wk:6,w:"slow",pos:"adj",def:"Not moving, acting or done quickly; taking a long time; not fast.",s:"The student’s progress was ____er than expected.",d:["foal","go","stroll"]},
+{wk:6,w:"stroll",pos:"v",def:"To walk somewhere in a slow relaxed way.",s:"People were ____ing along the beach.",d:["throw","foal","pine"]},
+{wk:6,w:"throw",pos:"v",def:"To send something from your hand through the air by moving your hand or arm quickly.",s:"They had a competition to see who could ____ the furthest.",d:["sky","foal","high"]},
+{wk:6,w:"foal",pos:"n",def:"A very young horse or donkey.",s:"The ____ ran across the field with its mother.",d:["sky","pine","snow"]},
+{wk:6,w:"snow",pos:"n",def:"Small soft white flakes of frozen water that fall from the sky in cold weather.",s:"Heavy ____ is expected tomorrow.",d:["foal","pine","stroll"]},
+{wk:6,w:"go",pos:"v",def:"To move somewhere.",s:"I think I’ll ____ and see a movie.",d:["sky","pine","foal"]},
+// ---- W7 ----
+{wk:7,w:"eloped",pos:"v",def:"To run away with somebody in order to marry them secretly.",s:"The teenage couple ____ to the U.S.A.",d:["decompose","amplify","recline"]},
+{wk:7,w:"feisty",pos:"adj",def:"Brave and determined and not afraid of arguing or defending yourself.",s:"Viewers of the T.V. show love her for her ____ and outspoken character.",d:["irregular","automatic","irrelevant"]},
+{wk:7,w:"decompose",pos:"v",def:"To be destroyed gradually after death by natural processes.",s:"After we die, our bodies will ____.",d:["amplify","eloped","geode"]},
+{wk:7,w:"amplify",pos:"v",def:"To amplify something you increase something in strength, especially sound.",s:"You ____ your songs by using a speaker.",d:["decompose","recline","stroll"]},
+{wk:7,w:"soprano",pos:"n",def:"A singing voice with the highest range for a woman or boy.",s:"The ____ impressed everyone with her voice.",d:["geode","lotion","foal"]},
+{wk:7,w:"knowingly",pos:"adv",def:"To do something on purpose.",s:"The naughty student ____ angered the teacher with his remarks.",d:["feisty","high","fine"]},
+{wk:7,w:"recycling",pos:"n",def:"The process of treating things that have already been used so that they can be used again.",s:"We do ____ after 8th period daily in our school.",d:["lotion","geode","soprano"]},
+{wk:7,w:"geode",pos:"n",def:"A small hole in rock that has crystals around the inside; a rock containing a geode.",s:"Some people like to collect rocks with ____s.",d:["soprano","lotion","foal"]},
+{wk:7,w:"recline",pos:"v",def:"To sit or lie in a relaxed way, with your body leaning backwards.",s:"Dad likes to ____ on the sofa and watch T.V.",d:["decompose","amplify","eloped"]},
+{wk:7,w:"lotion",pos:"n",def:"A liquid used for cleaning, protecting or treating the skin.",s:"When we go to the beach, don’t forget to cover yourself with suntan ____ or you will burn.",d:["geode","soprano","foal"]}
+];
+
+/* ---------- HELPERS ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => s.replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const WEEKS = [4,5,6,7];
+let submitted = false;
+const res = {1:{},2:{},3:{}};   // res[part][wordIndex] = true / false once checked
+
+function speak(text, rate){
+  if(!('speechSynthesis' in window)) { alert('This browser cannot read aloud. Please try Chrome or Safari.'); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = rate;
+  const v = speechSynthesis.getVoices().find(v=>/en[-_]US/i.test(v.lang));
+  if(v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+if('speechSynthesis' in window) speechSynthesis.getVoices();
+
+function blankDef(item){
+  const re = new RegExp('\\b'+item.w+'(s|ed|ing|ly)?\\b','ig');
+  return item.def.replace(re,'_____');
+}
+
+function banner(p,title,desc){
+  return `<div class="banner"><div><h2>${title}</h2><p>${desc}</p>
+    <div class="tally" id="tally${p}"></div></div>
+    <button class="btn ghost shuf" data-shuf="${p}">🔀 Shuffle</button></div>`;
+}
+function tally(p){
+  const vals = Object.values(res[p]);
+  $('#tally'+p).textContent = `Answered ${vals.length} / 40 · Correct ${vals.filter(Boolean).length} ✔`;
+}
+
+/* ---------- RENDER ---------- */
+function render1(){
+  const order = shuffle(WORDS.map((_,i)=>i));
+  let h = banner(1,'Part 1 · Listening 🎧','Press 🔊 to hear the word. Type it, then press ✔ (or Enter) to check. 🐢 = slow speed · 40 questions, 1 point each');
+  order.forEach((idx,n)=>{
+    h += `<div class="q" id="l${idx}">
+      <div class="num">${n+1}</div>
+      <button class="spk" data-say="${idx}" aria-label="Play word ${n+1}">🔊</button>
+      <button class="spk slow" data-say="${idx}" data-slow="1" aria-label="Play word ${n+1} slowly">🐢</button>
+      <input class="ans" type="text" id="li${idx}" data-i="${idx}" placeholder="type here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <button class="spk chk" data-chk="${idx}" aria-label="Check answer ${n+1}">✔</button>
+      <div class="fb" hidden></div></div>`;
+  });
+  h += `<div class="nav"><span></span><button class="btn" data-go="1">Next: Part 2 ▶</button></div>`;
+  $('#part0').innerHTML = h; tally(1);
+}
+function render2(){
+  let h = banner(2,'Part 2 · Matching 🔗','Read each meaning and choose the matching word. You will see right away if you are correct. · 4 sets × 10 = 40 questions, 1 point each');
+  WEEKS.forEach(wk=>{
+    const set = WORDS.map((x,i)=>({...x,i})).filter(x=>x.wk===wk);
+    h += `<div class="set-title"><span>Set ${wk-3}</span> Word box</div>
+      <div class="bank">${shuffle(set).map(x=>`<div class="chip">${x.w}</div>`).join('')}</div>`;
+    shuffle(set).forEach((x,n)=>{
+      h += `<div class="q def" id="m${x.i}">
+        <div class="num">${n+1}</div>
+        <div class="txt">${esc(blankDef(x))}</div>
+        <select class="sel" id="mi${x.i}" data-i="${x.i}">
+          <option value="">— choose —</option>
+          ${shuffle(set).map(o=>`<option value="${o.i}">${o.w}</option>`).join('')}
+        </select>
+        <div class="fb" hidden></div></div>`;
+    });
+  });
+  h += `<div class="nav"><button class="btn ghost" data-go="0">◀ Part 1</button><button class="btn" data-go="2">Next: Part 3 ▶</button></div>`;
+  $('#part1').innerHTML = h; tally(2);
+}
+function render3(){
+  const order = shuffle(WORDS.map((_,i)=>i));
+  let h = banner(3,'Part 3 · Choose the Word ✏️','Pick the best word to finish each sentence. Some words need an ending like -s, -er or -ing after the blank. A(n) means “a” or “an”. · 40 questions, 1 point each');
+  order.forEach((idx,n)=>{
+    const x = WORDS[idx];
+    const opts = shuffle([x.w,...x.d]);
+    const sent = esc(x.s).replace('____','<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+    h += `<div class="q cloze" id="c${idx}"><div class="top"><div class="num">${n+1}</div><div>${sent}</div></div>
+      <div class="opts">${opts.map((o,k)=>`<label class="opt" data-w="${o}"><input type="radio" name="c${idx}" value="${o}" data-i="${idx}">${'ABCD'[k]}. ${o}</label>`).join('')}</div>
+      <div class="fb" hidden></div></div>`;
+  });
+  h += `<div class="nav"><button class="btn ghost" data-go="1">◀ Part 2</button><button class="btn big" id="submitBtn">Hand in ✅</button></div>`;
+  $('#part2').innerHTML = h; tally(3);
+  $('#submitBtn').addEventListener('click',handIn);
+}
+render1(); render2(); render3();
+
+/* ---------- INSTANT CHECK ---------- */
+// force = true when handing in (empty answers are marked wrong and the answer is shown)
+function mark(p,i,force){
+  if(res[p][i]!==undefined) return;
+  const x = WORDS[i];
+  let ok, q, fb;
+  if(p===1){
+    const inp=$('#li'+i), v=inp.value.trim().toLowerCase();
+    if(!v && !force) return;
+    ok = v===x.w; q=$('#l'+i); inp.disabled=true; $('[data-chk="'+i+'"]',q).disabled=true;
+  } else if(p===2){
+    const sel=$('#mi'+i), v=sel.value;
+    if(v==='' && !force) return;
+    ok = v!=='' && +v===i; q=$('#m'+i); sel.disabled=true;
+  } else {
+    const picked=document.querySelector(`input[name="c${i}"]:checked`);
+    if(!picked && !force) return;
+    ok = !!picked && picked.value===x.w; q=$('#c'+i);
+    q.querySelectorAll('.opt').forEach(o=>{
+      o.querySelector('input').disabled=true;
+      if(o.dataset.w===x.w) o.classList.add('ok');
+      else if(picked && o.dataset.w===picked.value) o.classList.add('no');
+    });
+  }
+  res[p][i]=ok;
+  q.classList.add(ok?'right':'wrong');
+  fb=$('.fb',q); fb.hidden=false;
+  fb.innerHTML = ok ? '✔ Correct! 🎉' : `✘ Answer: <b>${x.w}</b>`;
+  tally(p);
+}
+
+for(const p of [1,2,3]){
+  const root = $('#part'+(p-1));
+  root.addEventListener('click',e=>{
+    const say=e.target.closest('[data-say]');
+    if(say){ speak(WORDS[say.dataset.say].w, say.dataset.slow?0.5:0.85); return; }
+    const chk=e.target.closest('[data-chk]');
+    if(chk){ mark(1,+chk.dataset.chk,false); return; }
+    const shuf=e.target.closest('[data-shuf]');
+    if(shuf){
+      if(submitted){ alert('The exam is already handed in. Press “Try again” on the Score page to start over.'); return; }
+      if(Object.keys(res[p]).length && !confirm('Shuffle will clear your answers in this part. Continue?')) return;
+      res[p]={}; [render1,render2,render3][p-1](); window.scrollTo({top:0,behavior:'smooth'});
+    }
+  });
+  if(p===1) root.addEventListener('keydown',e=>{
+    if(e.key==='Enter' && e.target.matches('.ans')) mark(1,+e.target.dataset.i,false);
+  });
+  if(p===2) root.addEventListener('change',e=>{
+    if(e.target.matches('.sel')) mark(2,+e.target.dataset.i,false);
+  });
+  if(p===3) root.addEventListener('change',e=>{
+    if(e.target.matches('input[type=radio]')) mark(3,+e.target.dataset.i,false);
+  });
+}
+
+/* ---------- NAV ---------- */
+function go(p){
+  document.querySelectorAll('.part').forEach((el,i)=>el.classList.toggle('on',i==p));
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('on',i==p));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.tab'); if(t) go(+t.dataset.p);
+  const g=e.target.closest('[data-go]'); if(g) go(+g.dataset.go);
+  if(e.target.closest('#retry')) location.reload();
+});
+
+/* ---------- HAND IN ---------- */
+function handIn(){
+  if(submitted) return go(3);
+  const left = [1,2,3].reduce((n,p)=>n+WORDS.filter((_,i)=>res[p][i]===undefined).length,0);
+  if(left && !confirm(`${left} question(s) are still empty. Hand in anyway?`)) return;
+  submitted = true;
+  WORDS.forEach((_,i)=>{ mark(1,i,true); mark(2,i,true); mark(3,i,true); });
+  const sc = p=>Object.values(res[p]).filter(Boolean).length;
+  const s1=sc(1), s2=sc(2), s3=sc(3), total=s1+s2+s3, pct=Math.round(total/120*100);
+  const msg = pct>=90?'Super star! 🌟':pct>=75?'Great job! 🎉':pct>=60?'Good work! Keep practicing 💪':'Nice try! Let’s review the words again 📘';
+  const name = $('#stuName').value.trim(), cls=$('#stuClass').value.trim();
+  $('#part3').innerHTML = `<div class="score">
+    <div>${esc(name)} ${cls?'('+esc(cls)+')':''}</div>
+    <div class="big">${total} / 120</div>
+    <div>${pct}% · ${msg}</div>
+    <div class="rows">
+      <div>Part 1 Listening<strong>${s1} / 40</strong></div>
+      <div>Part 2 Matching<strong>${s2} / 40</strong></div>
+      <div>Part 3 Sentences<strong>${s3} / 40</strong></div>
+    </div>
+    <button class="btn ghost" data-go="0">Review answers</button>
+    <button class="btn" id="retry">Try again 🔄</button>
+    <p class="hint">Use your browser’s print function to save a copy.</p></div>`;
+  $('#submitBtn').textContent='See score 🏆';
+  go(3);
+}
+</script>
+</body>
+</html>
